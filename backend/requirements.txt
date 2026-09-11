@@ -1,0 +1,4 @@
+dkimpy>=1.1.5
+pyspf>=2.0.14
+dnspython>=2.6.0
+authres>=1.2.0
