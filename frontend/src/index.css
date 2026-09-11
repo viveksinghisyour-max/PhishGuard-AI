@@ -1,0 +1,203 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+@import "leaflet/dist/leaflet.css";
+
+/* Leaflet Cyber Dark Theme Overrides */
+.leaflet-container {
+  background: #040711 !important;
+  font-family: inherit;
+  z-index: 10;
+}
+
+.leaflet-popup-content-wrapper {
+  background: rgba(10, 16, 32, 0.95) !important;
+  color: #f1f5f9 !important;
+  border: 1px solid rgba(6, 182, 212, 0.35) !important;
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.8), 0 0 20px rgba(6, 182, 212, 0.2) !important;
+  backdrop-filter: blur(16px) !important;
+  border-radius: 14px !important;
+  padding: 2px !important;
+}
+
+.leaflet-popup-tip {
+  background: rgba(10, 16, 32, 0.95) !important;
+  border: 1px solid rgba(6, 182, 212, 0.35) !important;
+}
+
+/* Radar Beacon Pulsing Keyframes */
+@keyframes radar-pulse-rose {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(244, 63, 94, 0.8); }
+  70% { transform: scale(1.15); box-shadow: 0 0 0 18px rgba(244, 63, 94, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(244, 63, 94, 0); }
+}
+
+@keyframes radar-pulse-cyan {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.8); }
+  70% { transform: scale(1.15); box-shadow: 0 0 0 14px rgba(6, 182, 212, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(6, 182, 212, 0); }
+}
+
+.marker-beacon-origin {
+  animation: radar-pulse-rose 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+.marker-beacon-relay {
+  animation: radar-pulse-cyan 2.5s infinite cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+  
+  body {
+    @apply bg-cyber-bg text-cyber-text font-sans antialiased overflow-x-hidden selection:bg-cyber-cyan/30 selection:text-white;
+    background-image: 
+      radial-gradient(ellipse at 20% 0%, rgba(6, 182, 212, 0.12) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 90%, rgba(139, 92, 246, 0.09) 0%, transparent 55%),
+      radial-gradient(ellipse at 50% 50%, rgba(16, 185, 129, 0.03) 0%, transparent 60%),
+      linear-gradient(to bottom, rgba(4, 7, 17, 0.98), rgba(4, 7, 17, 1));
+    min-height: 100vh;
+  }
+}
+
+/* Custom Sleek Scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #080d1a;
+}
+::-webkit-scrollbar-thumb {
+  background: #1b253b;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2a3a5a;
+}
+
+/* Modern 3D Perspective Card System */
+.perspective-container {
+  perspective: 1200px;
+}
+
+.card-3d {
+  transform: translateZ(0);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s ease;
+  will-change: transform, box-shadow;
+}
+
+.card-3d:hover {
+  transform: translateY(-4px) scale(1.01);
+}
+
+.card-spotlight {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-spotlight::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.6), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card-spotlight:hover::before {
+  opacity: 1;
+}
+
+/* Specular highlight & tactile borders */
+.specular-border {
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.1),
+              0 10px 30px -10px rgba(0, 0, 0, 0.5);
+}
+
+.glass-panel {
+  background: rgba(12, 19, 36, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(27, 37, 59, 0.85);
+}
+
+.glass-panel-glow {
+  background: rgba(12, 19, 36, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  box-shadow: 0 0 30px -5px rgba(6, 182, 212, 0.2);
+}
+
+/* Cyber subtle grid background */
+.cyber-grid {
+  background-size: 28px 28px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+}
+
+/* Modern Humanized Badges */
+.badge-critical {
+  @apply bg-rose-500/15 text-rose-300 border border-rose-500/40 shadow-[0_0_15px_-3px_rgba(244,63,94,0.4)];
+}
+
+.badge-high {
+  @apply bg-amber-500/15 text-amber-300 border border-amber-500/40 shadow-[0_0_15px_-3px_rgba(245,158,11,0.35)];
+}
+
+.badge-medium {
+  @apply bg-yellow-500/15 text-yellow-300 border border-yellow-500/40;
+}
+
+.badge-low {
+  @apply bg-emerald-500/15 text-emerald-300 border border-emerald-500/40 shadow-[0_0_15px_-3px_rgba(16,185,129,0.35)];
+}
+
+.badge-cyan {
+  @apply bg-cyan-500/15 text-cyan-300 border border-cyan-500/40 shadow-[0_0_15px_-3px_rgba(6,182,212,0.35)];
+}
+
+/* Live Marquee Ticker */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 35s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+/* Radar scan simulation */
+.radar-scan {
+  position: relative;
+  overflow: hidden;
+}
+
+.radar-scan::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  background: conic-gradient(from 0deg, transparent 0deg, transparent 300deg, rgba(6, 182, 212, 0.3) 360deg);
+  transform-origin: 0 0;
+  animation: radar 4s linear infinite;
+  pointer-events: none;
+}
+
+/* Leaflet dark theme fix */
+.leaflet-container {
+  background: #080d1a !important;
+  font-family: inherit;
+}

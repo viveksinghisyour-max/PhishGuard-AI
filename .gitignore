@@ -1,0 +1,94 @@
+# ==========================================
+# PhishGuard AI - Root .gitignore
+# ==========================================
+
+# Virtual Environments
+venv/
+.venv/
+env/
+ENV/
+backend/venv/
+*/venv/
+
+# Python Bytecode & Cache
+__pycache__/
+*/__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Testing & Coverage
+.pytest_cache/
+*/.pytest_cache/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+htmlcov/
+
+# Environment Variables & Secrets (NEVER COMMIT)
+.env
+.env.*
+!.env.example
+backend/.env
+frontend/.env
+*.env.local
+*.env.development.local
+*.env.test.local
+*.env.production.local
+
+# Node.js & Frontend Dependencies
+node_modules/
+*/node_modules/
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+frontend/*.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Large Raw Benchmark Training Datasets (Over GitHub 100MB limit)
+# Keep default_phishing_dataset.csv as lightweight out-of-the-box seed
+backend/data/datasets/*.csv
+!backend/data/datasets/default_phishing_dataset.csv
+
+# Temporary files, caches, and logs
+*.log
+*.tmp
+*.bak
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE & Editor configurations
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.sublime-project
+*.sublime-workspace
