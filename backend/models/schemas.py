@@ -135,6 +135,21 @@ class AnalysisResult(BaseModel):
     recommended_actions: list[str] = []
 
 # ==================== CASE MANAGEMENT ====================
+class CaseNote(BaseModel):
+    id: str
+    created_at: str
+    author: str
+    text: str
+
+class ContainmentAction(BaseModel):
+    id: str
+    created_at: str
+    action_type: str  # block_ip, block_domain, quarantine_inbox, revoke_token
+    target: str
+    status: str = "Executed"  # Executed, Pending, Failed
+    executed_by: str
+    details: str = ""
+
 class InvestigationCase(BaseModel):
     case_id: str
     created_at: str
@@ -149,6 +164,58 @@ class InvestigationCase(BaseModel):
     assigned_analyst: str = "SOC Analyst 1"
     sha256_hash: str
     summary: str = ""
+    sender_domain: Optional[str] = ""
+    threat_indicators: list[str] = []
+    extracted_urls: list[str] = []
+    notes: list[CaseNote] = []
+    containment_actions: list[ContainmentAction] = []
+
+class CaseNoteCreate(BaseModel):
+    author: str = "SOC Analyst"
+    text: str
+
+class ContainmentActionCreate(BaseModel):
+    action_type: str
+    target: str
+    executed_by: str = "SOC Analyst"
+    details: str = ""
+
+class PromoteAnalysisRequest(BaseModel):
+    analysis_id: str
+    subject: str
+    sender: str
+    recipient: str
+    earliest_ip: str = "127.0.0.1"
+    origin_country: str = "Unknown"
+    threat_score: int = 50
+    severity: str = "medium"
+    summary: str = ""
+    sha256_hash: str = ""
+    sender_domain: Optional[str] = ""
+    threat_indicators: list[str] = []
+    extracted_urls: list[str] = []
+    assigned_analyst: str = "Alex Vance (Lead)"
+
+# ==================== THREAT CORRELATION GRAPH ====================
+class GraphNode(BaseModel):
+    id: str
+    label: str
+    type: str  # case, ip, domain, url, hash, mailbox, asn
+    val: int = 1  # Relative weight / node size
+    severity: Optional[str] = None  # critical, high, medium, low, info
+    metadata: dict[str, Any] = {}
+
+class GraphLink(BaseModel):
+    source: str
+    target: str
+    relation: str  # ROUTED_THROUGH, DELIVERED_PAYLOAD, TARGETED, SHARED_INFRASTRUCTURE, RESOLVED_TO
+    is_cross_case: bool = False
+    label: Optional[str] = None
+
+class ThreatCorrelationGraph(BaseModel):
+    nodes: list[GraphNode]
+    links: list[GraphLink]
+    summary: dict[str, Any] = {}
 
 # ==================== DASHBOARD STATS ====================
 class DashboardStats(BaseModel):

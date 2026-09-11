@@ -187,6 +187,97 @@ export const api = {
     return null;
   },
 
+  async updateCaseAnalyst(caseId: string, analyst: string): Promise<InvestigationCase | null> {
+    try {
+      const res = await fetch(`${API_BASE}/investigations/${caseId}/analyst`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ assigned_analyst: analyst }),
+      });
+      if (res.ok) return await res.json();
+    } catch (e) {
+      console.error("Analyst update error", e);
+    }
+    return null;
+  },
+
+  async addCaseNote(caseId: string, text: string, author: string = "SOC Analyst"): Promise<import('../types').CaseNote> {
+    const res = await fetch(`${API_BASE}/investigations/${caseId}/notes`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text, author }),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ detail: 'Failed to add note' }));
+      throw new Error(err.detail || `Failed to add note: ${res.status}`);
+    }
+    return await res.json();
+  },
+
+  async executeContainment(
+    caseId: string,
+    actionType: string,
+    target: string,
+    executedBy: string = "SOC Analyst",
+    details: string = ""
+  ): Promise<import('../types').ContainmentAction> {
+    const res = await fetch(`${API_BASE}/investigations/${caseId}/containment`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        action_type: actionType,
+        target,
+        executed_by: executedBy,
+        details,
+      }),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ detail: 'Containment execution failed' }));
+      throw new Error(err.detail || `Containment execution failed: ${res.status}`);
+    }
+    return await res.json();
+  },
+
+  async getCorrelationGraph(caseId?: string): Promise<import('../types').ThreatCorrelationGraph> {
+    const url = caseId 
+      ? `${API_BASE}/investigations/${caseId}/graph`
+      : `${API_BASE}/investigations/correlation-graph`;
+    const res = await fetch(url);
+    if (!res.ok) {
+      throw new Error(`Failed to fetch threat correlation graph: ${res.status}`);
+    }
+    return await res.json();
+  },
+
+  async promoteAnalysisToCase(payload: {
+    analysis_id: string;
+    subject: string;
+    sender: string;
+    recipient: string;
+    earliest_ip?: string;
+    origin_country?: string;
+    threat_score?: number;
+    severity?: string;
+    summary?: string;
+    sha256_hash?: string;
+    sender_domain?: string;
+    threat_indicators?: string[];
+    extracted_urls?: string[];
+    assigned_analyst?: string;
+  }): Promise<InvestigationCase> {
+    const res = await fetch(`${API_BASE}/investigations/promote`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ detail: 'Failed to promote analysis to case' }));
+      throw new Error(err.detail || `Case promotion failed: ${res.status}`);
+    }
+    return await res.json();
+  },
+
+
   async analyzeRawEmail(rawText: string, filename?: string): Promise<AnalysisResult> {
     const res = await fetch(`${API_BASE}/analyze/raw`, {
       method: 'POST',

@@ -1,5 +1,77 @@
 [
   {
+    "case_id": "CASE-2026-5876",
+    "created_at": "2026-09-11T21:17:17.713628+00:00",
+    "subject": "URGENT: Outstanding Vendor Invoice Wire Transfer #INV-9921",
+    "sender": "cfo-exec@corporate-accts-wire.com",
+    "recipient": "finance-dept@phishguardai.com",
+    "earliest_ip": "185.220.101.44",
+    "origin_country": "Germany",
+    "threat_score": 85,
+    "severity": "critical",
+    "status": "Quarantined",
+    "assigned_analyst": "SOC Analyst 1",
+    "sha256_hash": "df1607fc17ede26a1a2fbe3528602ac55774f9a421055cad030a73622a79619b",
+    "summary": "High-confidence Malicious email payload (Threat Score: 85/100) claiming origin from 'cfo-exec@corporate-accts-wire.com'. Envelope exhibits authentication failure and hostile cues. Critical threat vectors detected including DMARC Enforcement Failure, Financial Diversion / Wire Redirection, ML NLP Phishing Classification (98.2%). Immediate containment and mailbox isolation recommended.",
+    "sender_domain": "",
+    "threat_indicators": [],
+    "extracted_urls": [],
+    "notes": [],
+    "containment_actions": []
+  },
+  {
+    "case_id": "CASE-2026-7236",
+    "created_at": "2026-09-11T20:54:58.719292+00:00",
+    "subject": "Suspicious Invoice Payment Verification",
+    "sender": "billing@fraudulent-supplier.com",
+    "recipient": "accounts-payable@enterprise.com",
+    "earliest_ip": "103.235.46.39",
+    "origin_country": "Hong Kong",
+    "threat_score": 85,
+    "severity": "critical",
+    "status": "Under Investigation",
+    "assigned_analyst": "Alex Vance (Lead)",
+    "sha256_hash": "d41d8cd98f00b204e9800998ecf8427e",
+    "summary": "Automated promotion test case",
+    "sender_domain": "fraudulent-supplier.com",
+    "threat_indicators": [
+      "Typosquatted Supplier",
+      "High Velocity Ingestion"
+    ],
+    "extracted_urls": [
+      "https://fraudulent-supplier.com/pay.php"
+    ],
+    "notes": [
+      {
+        "id": "NOTE-A18A3D",
+        "created_at": "2026-09-11T20:54:58.719381+00:00",
+        "author": "Alex Vance (Lead)",
+        "text": "Promoted incident from live analysis ANALYSIS-TEST-9999. Threat score: 85/100."
+      }
+    ],
+    "containment_actions": []
+  },
+  {
+    "case_id": "CASE-2026-2D89",
+    "created_at": "2026-09-11T16:27:12.683183+00:00",
+    "subject": "Deadline Extended: Grab \u20b910 Lakhs & PPI Opportunities",
+    "sender": "noreply@unstop.buzz",
+    "recipient": "viveksinghisyour@gmail.com",
+    "earliest_ip": "103.52.180.244",
+    "origin_country": "United States",
+    "threat_score": 5,
+    "severity": "low",
+    "status": "Open",
+    "assigned_analyst": "SOC Analyst 1",
+    "sha256_hash": "deac8da418463e9c4179f904b2b3b1160b51e6fa0c5bc1196bdb9bc13c310f79",
+    "summary": "Clean email payload (Threat Score: 5/100). Envelope passed primary authentication checks (SPF: PASS, DMARC: PASS). No malicious indicators discovered.",
+    "sender_domain": "",
+    "threat_indicators": [],
+    "extracted_urls": [],
+    "notes": [],
+    "containment_actions": []
+  },
+  {
     "case_id": "CASE-2026-280D",
     "created_at": "2026-09-11T15:29:33.390799+00:00",
     "subject": "Deadline Extended: Grab \u20b910 Lakhs & PPI Opportunities",
@@ -12,7 +84,12 @@
     "status": "Open",
     "assigned_analyst": "SOC Analyst 1",
     "sha256_hash": "deac8da418463e9c4179f904b2b3b1160b51e6fa0c5bc1196bdb9bc13c310f79",
-    "summary": "Clean email payload (Threat Score: 5/100). Envelope passed primary authentication checks (SPF: PASS, DMARC: PASS). No malicious indicators discovered."
+    "summary": "Clean email payload (Threat Score: 5/100). Envelope passed primary authentication checks (SPF: PASS, DMARC: PASS). No malicious indicators discovered.",
+    "sender_domain": "",
+    "threat_indicators": [],
+    "extracted_urls": [],
+    "notes": [],
+    "containment_actions": []
   },
   {
     "case_id": "CASE-2026-E4A9",
@@ -27,7 +104,12 @@
     "status": "Quarantined",
     "assigned_analyst": "SOC Analyst 1",
     "sha256_hash": "df1607fc17ede26a1a2fbe3528602ac55774f9a421055cad030a73622a79619b",
-    "summary": "High-confidence Malicious email payload (Threat Score: 85/100) claiming origin from 'cfo-exec@corporate-accts-wire.com'. Envelope exhibits authentication failure and hostile cues. Critical threat vectors detected including DMARC Enforcement Failure, Financial Diversion / Wire Redirection, ML NLP Phishing Classification (98.2%). Immediate containment and mailbox isolation recommended."
+    "summary": "High-confidence Malicious email payload (Threat Score: 85/100) claiming origin from 'cfo-exec@corporate-accts-wire.com'. Envelope exhibits authentication failure and hostile cues. Critical threat vectors detected including DMARC Enforcement Failure, Financial Diversion / Wire Redirection, ML NLP Phishing Classification (98.2%). Immediate containment and mailbox isolation recommended.",
+    "sender_domain": "",
+    "threat_indicators": [],
+    "extracted_urls": [],
+    "notes": [],
+    "containment_actions": []
   },
   {
     "case_id": "CASE-2026-4B12",
@@ -42,7 +124,12 @@
     "status": "Quarantined",
     "assigned_analyst": "SOC Analyst 1",
     "sha256_hash": "df1607fc17ede26a1a2fbe3528602ac55774f9a421055cad030a73622a79619b",
-    "summary": "High-confidence Malicious email payload (Threat Score: 85/100) claiming origin from 'cfo-exec@corporate-accts-wire.com'. Envelope exhibits authentication failure and hostile cues. Critical threat vectors detected including DMARC Enforcement Failure, Financial Diversion / Wire Redirection, ML NLP Phishing Classification (98.2%). Immediate containment and mailbox isolation recommended."
+    "summary": "High-confidence Malicious email payload (Threat Score: 85/100) claiming origin from 'cfo-exec@corporate-accts-wire.com'. Envelope exhibits authentication failure and hostile cues. Critical threat vectors detected including DMARC Enforcement Failure, Financial Diversion / Wire Redirection, ML NLP Phishing Classification (98.2%). Immediate containment and mailbox isolation recommended.",
+    "sender_domain": "",
+    "threat_indicators": [],
+    "extracted_urls": [],
+    "notes": [],
+    "containment_actions": []
   },
   {
     "case_id": "CASE-2026-E9B1",
@@ -57,7 +144,12 @@
     "status": "Open",
     "assigned_analyst": "SOC Analyst 1",
     "sha256_hash": "deac8da418463e9c4179f904b2b3b1160b51e6fa0c5bc1196bdb9bc13c310f79",
-    "summary": "Clean email payload (Threat Score: 5/100). Envelope passed primary authentication checks (SPF: PASS, DMARC: PASS). No malicious indicators discovered."
+    "summary": "Clean email payload (Threat Score: 5/100). Envelope passed primary authentication checks (SPF: PASS, DMARC: PASS). No malicious indicators discovered.",
+    "sender_domain": "",
+    "threat_indicators": [],
+    "extracted_urls": [],
+    "notes": [],
+    "containment_actions": []
   },
   {
     "case_id": "CASE-2026-7235",
@@ -72,7 +164,12 @@
     "status": "Open",
     "assigned_analyst": "SOC Analyst 1",
     "sha256_hash": "b72faa0d806a36119dc94eb1ded9b32f28080e8849f85c8997bfc6eb92b7283f",
-    "summary": "Clean email payload (Threat Score: 5/100). Envelope passed primary authentication checks (SPF: NONE, DMARC: NONE). No malicious indicators discovered."
+    "summary": "Clean email payload (Threat Score: 5/100). Envelope passed primary authentication checks (SPF: NONE, DMARC: NONE). No malicious indicators discovered.",
+    "sender_domain": "",
+    "threat_indicators": [],
+    "extracted_urls": [],
+    "notes": [],
+    "containment_actions": []
   },
   {
     "case_id": "CASE-2026-C5AF",
@@ -87,7 +184,12 @@
     "status": "Quarantined",
     "assigned_analyst": "SOC Analyst 1",
     "sha256_hash": "df1607fc17ede26a1a2fbe3528602ac55774f9a421055cad030a73622a79619b",
-    "summary": "High-confidence Malicious email payload (Threat Score: 85/100) claiming origin from 'cfo-exec@corporate-accts-wire.com'. Envelope exhibits authentication failure and hostile cues. Critical threat vectors detected including DMARC Enforcement Failure, Financial Diversion / Wire Redirection, ML NLP Phishing Classification (97.8%). Immediate containment and mailbox isolation recommended."
+    "summary": "High-confidence Malicious email payload (Threat Score: 85/100) claiming origin from 'cfo-exec@corporate-accts-wire.com'. Envelope exhibits authentication failure and hostile cues. Critical threat vectors detected including DMARC Enforcement Failure, Financial Diversion / Wire Redirection, ML NLP Phishing Classification (97.8%). Immediate containment and mailbox isolation recommended.",
+    "sender_domain": "",
+    "threat_indicators": [],
+    "extracted_urls": [],
+    "notes": [],
+    "containment_actions": []
   },
   {
     "case_id": "CASE-2026-A849",
@@ -102,7 +204,12 @@
     "status": "Under Investigation",
     "assigned_analyst": "SOC Analyst 1",
     "sha256_hash": "b220f16ddffd9b21a6b654fcb60483bac022b778a09fea09f6efdaa8a2e7bd9d",
-    "summary": "Suspicious email payload (Threat Score: 75/100) with flagged indicators (DMARC Enforcement Failure, Financial Diversion / Wire Redirection). Manual triage required by SOC analyst before releasing to recipient."
+    "summary": "Suspicious email payload (Threat Score: 75/100) with flagged indicators (DMARC Enforcement Failure, Financial Diversion / Wire Redirection). Manual triage required by SOC analyst before releasing to recipient.",
+    "sender_domain": "",
+    "threat_indicators": [],
+    "extracted_urls": [],
+    "notes": [],
+    "containment_actions": []
   },
   {
     "case_id": "CASE-2026-0AA0",
@@ -117,7 +224,12 @@
     "status": "Quarantined",
     "assigned_analyst": "SOC Analyst 1",
     "sha256_hash": "a0705886aee73c407c64d666210b6403b590e72fffb975a52a8227743ceb1e1c",
-    "summary": "High-confidence Malicious email payload (Threat Score: 98/100) claiming origin from 'no-reply@rnicrosoft-security-portal.xyz'. Envelope exhibits authentication failure and hostile cues. Critical threat vectors detected including DMARC Enforcement Failure, Credential Harvester Lure, ML NLP Phishing Classification (92.2%). Immediate containment and mailbox isolation recommended."
+    "summary": "High-confidence Malicious email payload (Threat Score: 98/100) claiming origin from 'no-reply@rnicrosoft-security-portal.xyz'. Envelope exhibits authentication failure and hostile cues. Critical threat vectors detected including DMARC Enforcement Failure, Credential Harvester Lure, ML NLP Phishing Classification (92.2%). Immediate containment and mailbox isolation recommended.",
+    "sender_domain": "",
+    "threat_indicators": [],
+    "extracted_urls": [],
+    "notes": [],
+    "containment_actions": []
   },
   {
     "case_id": "CASE-2026-5E4F",
@@ -132,7 +244,12 @@
     "status": "Quarantined",
     "assigned_analyst": "SOC Analyst 1",
     "sha256_hash": "df1607fc17ede26a1a2fbe3528602ac55774f9a421055cad030a73622a79619b",
-    "summary": "High-confidence Malicious email payload (Threat Score: 85/100) claiming origin from 'cfo-exec@corporate-accts-wire.com'. Envelope exhibits authentication failure and hostile cues. Critical threat vectors detected including DMARC Enforcement Failure, Financial Diversion / Wire Redirection, ML NLP Phishing Classification (97.8%). Immediate containment and mailbox isolation recommended."
+    "summary": "High-confidence Malicious email payload (Threat Score: 85/100) claiming origin from 'cfo-exec@corporate-accts-wire.com'. Envelope exhibits authentication failure and hostile cues. Critical threat vectors detected including DMARC Enforcement Failure, Financial Diversion / Wire Redirection, ML NLP Phishing Classification (97.8%). Immediate containment and mailbox isolation recommended.",
+    "sender_domain": "",
+    "threat_indicators": [],
+    "extracted_urls": [],
+    "notes": [],
+    "containment_actions": []
   },
   {
     "case_id": "CASE-2026-FEA1",
@@ -147,7 +264,12 @@
     "status": "Quarantined",
     "assigned_analyst": "SOC Analyst 1",
     "sha256_hash": "b220f16ddffd9b21a6b654fcb60483bac022b778a09fea09f6efdaa8a2e7bd9d",
-    "summary": "Suspicious email payload (Threat Score: 75/100) with flagged indicators (DMARC Enforcement Failure, Financial Diversion / Wire Redirection). Manual triage required by SOC analyst before releasing to recipient. [Note: Automated Phase 1 test quarantine]"
+    "summary": "Suspicious email payload (Threat Score: 75/100) with flagged indicators (DMARC Enforcement Failure, Financial Diversion / Wire Redirection). Manual triage required by SOC analyst before releasing to recipient. [Note: Automated Phase 1 test quarantine]",
+    "sender_domain": "",
+    "threat_indicators": [],
+    "extracted_urls": [],
+    "notes": [],
+    "containment_actions": []
   },
   {
     "case_id": "CASE-2026-5CE3",
@@ -162,7 +284,12 @@
     "status": "Under Investigation",
     "assigned_analyst": "SOC Analyst 1",
     "sha256_hash": "b220f16ddffd9b21a6b654fcb60483bac022b778a09fea09f6efdaa8a2e7bd9d",
-    "summary": "Suspicious email payload (Threat Score: 75/100) with flagged indicators (DMARC Enforcement Failure, Financial Diversion / Wire Redirection). Manual triage required by SOC analyst before releasing to recipient."
+    "summary": "Suspicious email payload (Threat Score: 75/100) with flagged indicators (DMARC Enforcement Failure, Financial Diversion / Wire Redirection). Manual triage required by SOC analyst before releasing to recipient.",
+    "sender_domain": "",
+    "threat_indicators": [],
+    "extracted_urls": [],
+    "notes": [],
+    "containment_actions": []
   },
   {
     "case_id": "CASE-2026-E8D4",
@@ -177,7 +304,12 @@
     "status": "Quarantined",
     "assigned_analyst": "SOC Analyst 1",
     "sha256_hash": "a0705886aee73c407c64d666210b6403b590e72fffb975a52a8227743ceb1e1c",
-    "summary": "High-confidence Malicious email payload (Threat Score: 98/100) claiming origin from 'no-reply@rnicrosoft-security-portal.xyz'. Envelope exhibits authentication failure and hostile cues. Critical threat vectors detected including DMARC Enforcement Failure, Credential Harvester Lure, ML NLP Phishing Classification (92.2%). Immediate containment and mailbox isolation recommended."
+    "summary": "High-confidence Malicious email payload (Threat Score: 98/100) claiming origin from 'no-reply@rnicrosoft-security-portal.xyz'. Envelope exhibits authentication failure and hostile cues. Critical threat vectors detected including DMARC Enforcement Failure, Credential Harvester Lure, ML NLP Phishing Classification (92.2%). Immediate containment and mailbox isolation recommended.",
+    "sender_domain": "",
+    "threat_indicators": [],
+    "extracted_urls": [],
+    "notes": [],
+    "containment_actions": []
   },
   {
     "case_id": "CASE-2026-ACF9",
@@ -192,7 +324,12 @@
     "status": "Quarantined",
     "assigned_analyst": "SOC Analyst 1",
     "sha256_hash": "df1607fc17ede26a1a2fbe3528602ac55774f9a421055cad030a73622a79619b",
-    "summary": "High-confidence Malicious email payload (Threat Score: 85/100) claiming origin from 'cfo-exec@corporate-accts-wire.com'. Envelope exhibits authentication failure and hostile cues. Critical threat vectors detected including DMARC Enforcement Failure, Financial Diversion / Wire Redirection, ML NLP Phishing Classification (97.8%). Immediate containment and mailbox isolation recommended."
+    "summary": "High-confidence Malicious email payload (Threat Score: 85/100) claiming origin from 'cfo-exec@corporate-accts-wire.com'. Envelope exhibits authentication failure and hostile cues. Critical threat vectors detected including DMARC Enforcement Failure, Financial Diversion / Wire Redirection, ML NLP Phishing Classification (97.8%). Immediate containment and mailbox isolation recommended.",
+    "sender_domain": "",
+    "threat_indicators": [],
+    "extracted_urls": [],
+    "notes": [],
+    "containment_actions": []
   },
   {
     "case_id": "CASE-2026-749A",
@@ -207,7 +344,12 @@
     "status": "Quarantined",
     "assigned_analyst": "SOC Analyst 1",
     "sha256_hash": "df1607fc17ede26a1a2fbe3528602ac55774f9a421055cad030a73622a79619b",
-    "summary": "High-confidence Malicious email payload (Threat Score: 78/100) claiming origin from 'cfo-exec@corporate-accts-wire.com'. Envelope exhibits authentication failure and hostile cues. Critical threat vectors detected including DMARC Enforcement Failure, Financial Diversion / Wire Redirection, Transmitted via TOR Anonymization Network. Immediate containment and mailbox isolation recommended. [Note: Automated Phase 1 test quarantine]"
+    "summary": "High-confidence Malicious email payload (Threat Score: 78/100) claiming origin from 'cfo-exec@corporate-accts-wire.com'. Envelope exhibits authentication failure and hostile cues. Critical threat vectors detected including DMARC Enforcement Failure, Financial Diversion / Wire Redirection, Transmitted via TOR Anonymization Network. Immediate containment and mailbox isolation recommended. [Note: Automated Phase 1 test quarantine]",
+    "sender_domain": "",
+    "threat_indicators": [],
+    "extracted_urls": [],
+    "notes": [],
+    "containment_actions": []
   },
   {
     "case_id": "CASE-2026-58B0",
@@ -222,7 +364,12 @@
     "status": "Quarantined",
     "assigned_analyst": "SOC Analyst 1",
     "sha256_hash": "df1607fc17ede26a1a2fbe3528602ac55774f9a421055cad030a73622a79619b",
-    "summary": "High-confidence Malicious email payload (Threat Score: 78/100) claiming origin from 'cfo-exec@corporate-accts-wire.com'. Envelope exhibits authentication failure and hostile cues. Critical threat vectors detected including DMARC Enforcement Failure, Financial Diversion / Wire Redirection, Transmitted via TOR Anonymization Network. Immediate containment and mailbox isolation recommended."
+    "summary": "High-confidence Malicious email payload (Threat Score: 78/100) claiming origin from 'cfo-exec@corporate-accts-wire.com'. Envelope exhibits authentication failure and hostile cues. Critical threat vectors detected including DMARC Enforcement Failure, Financial Diversion / Wire Redirection, Transmitted via TOR Anonymization Network. Immediate containment and mailbox isolation recommended.",
+    "sender_domain": "",
+    "threat_indicators": [],
+    "extracted_urls": [],
+    "notes": [],
+    "containment_actions": []
   },
   {
     "case_id": "CASE-2026-AFDB",
@@ -237,7 +384,12 @@
     "status": "Quarantined",
     "assigned_analyst": "SOC Analyst 1",
     "sha256_hash": "df1607fc17ede26a1a2fbe3528602ac55774f9a421055cad030a73622a79619b",
-    "summary": "High-confidence Malicious email payload (Threat Score: 78/100) claiming origin from 'cfo-exec@corporate-accts-wire.com'. Envelope exhibits authentication failure and hostile cues. Critical threat vectors detected including DMARC Enforcement Failure, Financial Diversion / Wire Redirection, Transmitted via TOR Anonymization Network. Immediate containment and mailbox isolation recommended."
+    "summary": "High-confidence Malicious email payload (Threat Score: 78/100) claiming origin from 'cfo-exec@corporate-accts-wire.com'. Envelope exhibits authentication failure and hostile cues. Critical threat vectors detected including DMARC Enforcement Failure, Financial Diversion / Wire Redirection, Transmitted via TOR Anonymization Network. Immediate containment and mailbox isolation recommended.",
+    "sender_domain": "",
+    "threat_indicators": [],
+    "extracted_urls": [],
+    "notes": [],
+    "containment_actions": []
   },
   {
     "case_id": "CASE-2026-B1BB",
@@ -252,7 +404,12 @@
     "status": "Quarantined",
     "assigned_analyst": "SOC Analyst 1",
     "sha256_hash": "a0705886aee73c407c64d666210b6403b590e72fffb975a52a8227743ceb1e1c",
-    "summary": "High-confidence Malicious email payload (Threat Score: 78/100) claiming origin from 'no-reply@rnicrosoft-security-portal.xyz'. Envelope exhibits authentication failure and hostile cues. Critical threat vectors detected including DMARC Enforcement Failure, Credential Harvester Lure, Sender Domain Lookalike (MICROSOFT). Immediate containment and mailbox isolation recommended."
+    "summary": "High-confidence Malicious email payload (Threat Score: 78/100) claiming origin from 'no-reply@rnicrosoft-security-portal.xyz'. Envelope exhibits authentication failure and hostile cues. Critical threat vectors detected including DMARC Enforcement Failure, Credential Harvester Lure, Sender Domain Lookalike (MICROSOFT). Immediate containment and mailbox isolation recommended.",
+    "sender_domain": "",
+    "threat_indicators": [],
+    "extracted_urls": [],
+    "notes": [],
+    "containment_actions": []
   },
   {
     "case_id": "CASE-2026-8EAA",
@@ -267,7 +424,12 @@
     "status": "Quarantined",
     "assigned_analyst": "SOC Analyst 1",
     "sha256_hash": "df1607fc17ede26a1a2fbe3528602ac55774f9a421055cad030a73622a79619b",
-    "summary": "High-confidence Malicious email payload (Threat Score: 78/100) claiming origin from 'cfo-exec@corporate-accts-wire.com'. Envelope exhibits authentication failure and hostile cues. Critical threat vectors detected including DMARC Enforcement Failure, Financial Diversion / Wire Redirection, Transmitted via TOR Anonymization Network. Immediate containment and mailbox isolation recommended."
+    "summary": "High-confidence Malicious email payload (Threat Score: 78/100) claiming origin from 'cfo-exec@corporate-accts-wire.com'. Envelope exhibits authentication failure and hostile cues. Critical threat vectors detected including DMARC Enforcement Failure, Financial Diversion / Wire Redirection, Transmitted via TOR Anonymization Network. Immediate containment and mailbox isolation recommended.",
+    "sender_domain": "",
+    "threat_indicators": [],
+    "extracted_urls": [],
+    "notes": [],
+    "containment_actions": []
   },
   {
     "case_id": "CASE-2026-0891",
@@ -280,9 +442,37 @@
     "threat_score": 94,
     "severity": "critical",
     "status": "Quarantined",
-    "assigned_analyst": "Alex Vance (Lead)",
+    "assigned_analyst": "Sarah Chen",
     "sha256_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "summary": "Executive impersonation BEC attack attempting wire payment diversion to overseas account. [Note: Automated Phase 1 test quarantine] [Note: Automated Phase 1 test quarantine] [Note: Automated Phase 1 test quarantine]"
+    "summary": "Executive impersonation BEC attack attempting wire payment diversion to overseas account. [Note: Automated Phase 1 test quarantine] [Note: Automated Phase 1 test quarantine] [Note: Automated Phase 1 test quarantine]",
+    "sender_domain": "",
+    "threat_indicators": [],
+    "extracted_urls": [],
+    "notes": [
+      {
+        "id": "NOTE-D11576",
+        "created_at": "2026-09-11T20:54:58.823733+00:00",
+        "author": "Marcus Brody",
+        "text": "DNS records updated."
+      },
+      {
+        "id": "NOTE-9E1679",
+        "created_at": "2026-09-11T20:54:58.687379+00:00",
+        "author": "Sarah Chen",
+        "text": "Correlated attack pattern with APT29 phishing playbook."
+      }
+    ],
+    "containment_actions": [
+      {
+        "id": "ACT-552C0B",
+        "created_at": "2026-09-11T20:54:58.842739+00:00",
+        "action_type": "quarantine_inbox",
+        "target": "finance-dept@enterprise.com",
+        "status": "Executed",
+        "executed_by": "Alex Vance (Lead)",
+        "details": "Triggered automated mailbox isolation"
+      }
+    ]
   },
   {
     "case_id": "CASE-2026-0889",
@@ -297,7 +487,22 @@
     "status": "Under Investigation",
     "assigned_analyst": "Sarah Chen",
     "sha256_hash": "a4f8b2c198fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b712",
-    "summary": "Typosquatted domain hosting credential harvesting replica of Microsoft login portal."
+    "summary": "Typosquatted domain hosting credential harvesting replica of Microsoft login portal.",
+    "sender_domain": "",
+    "threat_indicators": [],
+    "extracted_urls": [],
+    "notes": [],
+    "containment_actions": [
+      {
+        "id": "ACT-A7F7EB",
+        "created_at": "2026-09-11T20:54:58.705521+00:00",
+        "action_type": "block_ip",
+        "target": "194.26.29.112",
+        "status": "Executed",
+        "executed_by": "Alex Vance (Lead)",
+        "details": "Added IP to perimeter edge firewall drop list."
+      }
+    ]
   },
   {
     "case_id": "CASE-2026-0884",
@@ -312,7 +517,12 @@
     "status": "Open",
     "assigned_analyst": "Marcus Brody",
     "sha256_hash": "8f3e5b7298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b499",
-    "summary": "Shipping phishing delivery payload disguised as zipped invoice receipt."
+    "summary": "Shipping phishing delivery payload disguised as zipped invoice receipt.",
+    "sender_domain": "",
+    "threat_indicators": [],
+    "extracted_urls": [],
+    "notes": [],
+    "containment_actions": []
   },
   {
     "case_id": "CASE-2026-0878",
@@ -327,7 +537,12 @@
     "status": "Triaged",
     "assigned_analyst": "Sarah Chen",
     "sha256_hash": "2c9d4e1198fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b901",
-    "summary": "Direct deposit phishing lure targeting employee banking information."
+    "summary": "Direct deposit phishing lure targeting employee banking information.",
+    "sender_domain": "",
+    "threat_indicators": [],
+    "extracted_urls": [],
+    "notes": [],
+    "containment_actions": []
   },
   {
     "case_id": "CASE-2026-0870",
@@ -342,7 +557,12 @@
     "status": "Closed",
     "assigned_analyst": "Alex Vance (Lead)",
     "sha256_hash": "7b1c3a8898fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b332",
-    "summary": "DocuSign brand abuse lure linking to fake OAuth consent authorization."
+    "summary": "DocuSign brand abuse lure linking to fake OAuth consent authorization.",
+    "sender_domain": "",
+    "threat_indicators": [],
+    "extracted_urls": [],
+    "notes": [],
+    "containment_actions": []
   },
   {
     "case_id": "CASE-2026-0865",
@@ -357,6 +577,11 @@
     "status": "Closed",
     "assigned_analyst": "Automated Policy",
     "sha256_hash": "3d4e5f6798fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b111",
-    "summary": "Legitimate internal IT security awareness communication. SPF, DKIM, and DMARC aligned."
+    "summary": "Legitimate internal IT security awareness communication. SPF, DKIM, and DMARC aligned.",
+    "sender_domain": "",
+    "threat_indicators": [],
+    "extracted_urls": [],
+    "notes": [],
+    "containment_actions": []
   }
 ]

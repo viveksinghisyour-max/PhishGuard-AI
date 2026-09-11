@@ -161,6 +161,23 @@ export interface AnalysisResult {
   recommended_actions: string[];
 }
 
+export interface CaseNote {
+  id: string;
+  created_at: string;
+  author: string;
+  text: string;
+}
+
+export interface ContainmentAction {
+  id: string;
+  created_at: string;
+  action_type: string; // block_ip, block_domain, quarantine_inbox, revoke_token
+  target: string;
+  status: 'Executed' | 'Pending' | 'Failed';
+  executed_by: string;
+  details: string;
+}
+
 export interface InvestigationCase {
   case_id: string;
   created_at: string;
@@ -175,7 +192,46 @@ export interface InvestigationCase {
   assigned_analyst: string;
   sha256_hash: string;
   summary: string;
+  sender_domain?: string;
+  threat_indicators?: string[];
+  extracted_urls?: string[];
+  notes?: CaseNote[];
+  containment_actions?: ContainmentAction[];
 }
+
+export interface GraphNode {
+  id: string;
+  label: string;
+  type: 'case' | 'ip' | 'domain' | 'url' | 'hash' | 'mailbox' | 'asn';
+  val: number;
+  severity?: SeverityLevel | 'info';
+  metadata?: Record<string, any>;
+  x?: number;
+  y?: number;
+  vx?: number;
+  vy?: number;
+}
+
+export interface GraphLink {
+  source: string;
+  target: string;
+  relation: string;
+  is_cross_case?: boolean;
+  label?: string;
+}
+
+export interface ThreatCorrelationGraph {
+  nodes: GraphNode[];
+  links: GraphLink[];
+  summary: {
+    total_nodes?: number;
+    total_links?: number;
+    cross_case_pivots?: number;
+    cases_represented?: number;
+    critical_pivots?: string[];
+  };
+}
+
 
 export interface DashboardStats {
   total_analyzed: number;

@@ -42,6 +42,38 @@ export const AnalysisReportView: React.FC<AnalysisReportViewProps> = ({ result, 
   const [deepReasoning, setDeepReasoning] = useState<LLMReasoningResponse | null>(null);
   const [loadingReasoning, setLoadingReasoning] = useState<boolean>(false);
   const [showThinking, setShowThinking] = useState<boolean>(false);
+  const [isPromoting, setIsPromoting] = useState<boolean>(false);
+  const [promotedCaseId, setPromotedCaseId] = useState<string | null>(null);
+
+  const handlePromoteToCase = async () => {
+    setIsPromoting(true);
+    try {
+      const createdCase = await api.promoteAnalysisToCase({
+        analysis_id: result.id,
+        subject: result.subject,
+        sender: result.sender,
+        recipient: result.recipient,
+        earliest_ip: result.earliest_origin_ip || "127.0.0.1",
+        origin_country: result.origin_geo?.country || "Unknown",
+        threat_score: result.threat_score.score,
+        severity: result.threat_score.severity,
+        summary: result.ai_summary || "Automated email analysis promoted to formal SOC incident.",
+        sha256_hash: result.sha256_hash,
+        sender_domain: result.sender.includes('@') ? result.sender.split('@')[1] : '',
+        threat_indicators: result.indicators.map(i => i.title),
+        extracted_urls: result.extracted_urls.map(u => u.url),
+        assigned_analyst: "Alex Vance (Lead)",
+      });
+      setPromotedCaseId(createdCase.case_id);
+      setTimeout(() => {
+        setActiveTab('investigations');
+      }, 1200);
+    } catch (e: any) {
+      alert(`Case promotion failed: ${e.message}`);
+    } finally {
+      setIsPromoting(false);
+    }
+  };
 
   const handleRunDeepReasoning = async () => {
     setLoadingReasoning(true);
@@ -125,6 +157,15 @@ export const AnalysisReportView: React.FC<AnalysisReportViewProps> = ({ result, 
           >
             <Download className="w-3.5 h-3.5 text-cyan-400" />
             <span>Export Evidence JSON</span>
+          </button>
+
+          <button
+            onClick={handlePromoteToCase}
+            disabled={isPromoting || Boolean(promotedCaseId)}
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-cyber-purple/20 hover:bg-cyber-purple/30 border border-cyber-purple/50 text-purple-300 text-xs font-mono font-semibold transition-all shadow-glow-purple/20 disabled:opacity-50"
+          >
+            <ShieldAlert className="w-3.5 h-3.5 text-cyber-purple" />
+            <span>{promotedCaseId ? `Promoted (${promotedCaseId})` : isPromoting ? 'Promoting...' : 'Promote to Formal Case'}</span>
           </button>
 
           <button
