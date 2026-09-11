@@ -1,3 +1,4 @@
+import os
 import math
 import ipaddress
 import logging
@@ -129,7 +130,42 @@ class GeolocationService:
             cls._RUNTIME_CACHE[clean_ip] = geo
             return geo
 
-        # 3. Live Online Resolver (ip-api.com with 2s timeout)
+        # 3. Optional Enterprise ipinfo.io Resolver (if IPINFO_TOKEN is set)
+        ipinfo_token = os.getenv("IPINFO_TOKEN", "").strip()
+        if ipinfo_token:
+            try:
+                with httpx.Client(timeout=2.5) as client:
+                    res = client.get(f"https://ipinfo.io/{clean_ip}/json?token={ipinfo_token}")
+                    if res.status_code == 200:
+                        data = res.json()
+                        loc = data.get("loc", "0,0").split(",")
+                        lat = float(loc[0]) if len(loc) > 0 else 0.0
+                        lon = float(loc[1]) if len(loc) > 1 else 0.0
+                        org_parts = data.get("org", "").split(" ", 1)
+                        asn = org_parts[0] if org_parts else "AS0"
+                        isp = org_parts[1] if len(org_parts) > 1 else data.get("org", "Commercial Carrier")
+                        privacy = data.get("privacy", {})
+                        geo = GeoLocationInfo(
+                            ip=clean_ip,
+                            country=data.get("country", "Unknown"),
+                            country_code=data.get("country", "UN"),
+                            city=data.get("city", "Unknown"),
+                            region=data.get("region", ""),
+                            latitude=lat,
+                            longitude=lon,
+                            isp=isp,
+                            asn=asn,
+                            is_hosting=privacy.get("hosting", False),
+                            is_vpn=privacy.get("vpn", False),
+                            is_tor=privacy.get("tor", False),
+                            confidence="High"
+                        )
+                        cls._RUNTIME_CACHE[clean_ip] = geo
+                        return geo
+            except Exception as e:
+                logger.debug(f"ipinfo.io lookup unavailable for {clean_ip}: {e}")
+
+        # 4. Live Online Resolver Fallback (ip-api.com with 2s timeout)
         try:
             with httpx.Client(timeout=2.5) as client:
                 res = client.get(f"http://ip-api.com/json/{clean_ip}?fields=status,message,country,countryCode,regionName,city,lat,lon,isp,as,hosting")
