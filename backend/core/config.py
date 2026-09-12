@@ -15,14 +15,10 @@ class Settings:
     API_V1_STR: str = "/api/v1"
     
     # CORS
+    _raw_cors = os.getenv("CORS_ORIGINS", "*")
     CORS_ORIGINS: list[str] = [
-        "http://localhost:5173",
-        "http://127.0.0.1:5173",
-        "http://localhost:3000",
-        "http://127.0.0.1:3000",
-        "http://localhost:8000",
-        "http://127.0.0.1:8000"
-    ]
+        origin.strip() for origin in _raw_cors.split(",") if origin.strip()
+    ] if _raw_cors != "*" else ["*"]
     
     # Storage paths
     DATA_DIR: Path = BASE_DIR / "data"

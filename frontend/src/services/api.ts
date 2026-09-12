@@ -8,9 +8,11 @@ import {
   DefensiveRulesResponse
 } from '../types';
 
-const API_BASE = (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'))
-  ? '/api/v1'
-  : (import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000/api/v1');
+const API_BASE = import.meta.env.VITE_API_URL 
+  ? (import.meta.env.VITE_API_URL.endsWith('/') 
+      ? import.meta.env.VITE_API_URL.slice(0, -1) 
+      : import.meta.env.VITE_API_URL)
+  : '/api/v1';
 
 // Offline fallback data if backend is starting or offline
 const FALLBACK_STATS: DashboardStats = {
