@@ -293,4 +293,8 @@ class GeolocationService:
         }
 
 # Global singleton helper
+GeolocationService.lookup_ip = GeolocationService.resolve_ip
 geo_service = GeolocationService()
+geolocation_service = geo_service
+
+

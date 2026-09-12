@@ -249,13 +249,74 @@ export interface IOCLookupResponse {
   ioc_type: string;
   reputation: 'Malicious' | 'Suspicious' | 'Safe' | 'Unknown';
   threat_score: number;
+  confidence_score?: number;
   geolocation?: GeoLocationInfo;
   associated_threats: string[];
   mitre_techniques: string[];
+  threat_actors?: string[];
+  associated_cases?: string[];
+  blacklists_hit?: number;
+  blacklists_total?: number;
   last_seen: string;
   reports_count: number;
   whois_info?: Record<string, any>;
 }
+
+export interface ThreatFeedProviderStatus {
+  name: string;
+  category: string;
+  count: number;
+  status: string;
+  last_sync: string;
+}
+
+export interface ThreatFeedSyncStatus {
+  last_sync: string;
+  total_indicators: number;
+  providers: ThreatFeedProviderStatus[];
+  is_syncing: boolean;
+}
+
+export interface MitreTechnique {
+  id: string;
+  name: string;
+  tactic_id: string;
+  tactic_name: string;
+  description: string;
+  subtechniques_count: number;
+  detection_rules: string[];
+  mitigation_ids: string[];
+}
+
+export interface MitreTactic {
+  id: string;
+  name: string;
+  description: string;
+  techniques: MitreTechnique[];
+}
+
+export interface MitreMatrixResponse {
+  tactics: MitreTactic[];
+  total_tactics: number;
+  total_techniques: number;
+}
+
+export interface MitreHeatmapHit {
+  technique_id: string;
+  technique_name: string;
+  tactic_id: string;
+  detection_count: number;
+  severity: SeverityLevel | 'info';
+  case_ids: string[];
+  last_detected: string;
+}
+
+export interface MitreHeatmapResponse {
+  hits: Record<string, MitreHeatmapHit>;
+  total_detections: number;
+  top_techniques: string[];
+}
+
 
 export interface SampleEmail {
   id: string;
@@ -324,3 +385,82 @@ export interface LLMReasoningResponse {
 }
 
 export type ActiveTab = 'dashboard' | 'analyze' | 'investigations' | 'intel' | 'reports' | 'models' | 'settings';
+
+// ==================== PHASE 7: FORENSIC DOSSIER & CHAIN OF CUSTODY ====================
+export interface ChainOfCustodyBlock {
+  step_index: number;
+  stage: string;
+  timestamp: string;
+  actor: string;
+  action_summary: string;
+  artifact_hash: string;
+  prev_block_hash: string;
+  block_hash: string;
+  verification_status: string;
+}
+
+export interface BlockVerificationDetail {
+  step_index: number;
+  stage: string;
+  hash_matches: boolean;
+  link_valid: boolean;
+  recorded_hash: string;
+  recalculated_hash: string;
+}
+
+export interface ChainOfCustodyVerification {
+  is_valid: boolean;
+  chain_length: number;
+  verified_at: string;
+  verified_by: string;
+  genesis_hash: string;
+  latest_block_hash: string;
+  tamper_detected: boolean;
+  details: string;
+  block_details: BlockVerificationDetail[];
+}
+
+export interface ForensicDossier {
+  case_id: string;
+  created_at: string;
+  classification_banner: string;
+  case_status: string;
+  assigned_analyst: string;
+  subject: string;
+  sender: string;
+  recipient: string;
+  earliest_ip: string;
+  origin_country: string;
+  threat_score: number;
+  severity: SeverityLevel;
+  verdict: string;
+  summary: string;
+  primary_sha256: string;
+  md5_digest: string;
+  sha1_digest: string;
+  header_fingerprint: string;
+  chain_of_custody: ChainOfCustodyBlock[];
+  relay_hops: RelayHop[];
+  indicators: ThreatIndicator[];
+  mitre_techniques: Array<{
+    technique_id: string;
+    name: string;
+    tactic_id: string;
+    tactic_name: string;
+    evidence: string;
+  }>;
+  extracted_urls: string[];
+  containment_actions: ContainmentAction[];
+  analyst_notes: CaseNote[];
+  defense_recommendations: string[];
+}
+
+export interface DefensiveRulesResponse {
+  case_id: string;
+  suricata_rules: string;
+  snort_rules: string;
+  yara_rule: string;
+  ioc_count: number;
+  generated_at: string;
+}
+

@@ -24,7 +24,8 @@ import {
   Sparkles,
   Cpu,
   Brain,
-  Bot
+  Bot,
+  FileText
 } from 'lucide-react';
 import { AnalysisResult, ActiveTab, LLMReasoningResponse, RelayHop } from '../../types';
 import { api } from '../../services/api';
@@ -169,6 +170,14 @@ export const AnalysisReportView: React.FC<AnalysisReportViewProps> = ({ result, 
           </button>
 
           <button
+            onClick={() => setActiveTab('reports')}
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-cyber-cyan/15 hover:bg-cyber-cyan/25 border border-cyber-cyan/40 text-cyan-300 text-xs font-mono font-semibold transition-all shadow-glow-cyan"
+          >
+            <FileText className="w-3.5 h-3.5 text-cyber-cyan" />
+            <span>View Forensic Dossier</span>
+          </button>
+
+          <button
             onClick={() => setActiveTab('investigations')}
             className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-500/40 text-cyan-300 text-xs font-mono font-semibold transition-all shadow-glow-cyan"
           >
@@ -177,6 +186,7 @@ export const AnalysisReportView: React.FC<AnalysisReportViewProps> = ({ result, 
           </button>
         </div>
       </div>
+
 
       {/* Hero Threat Score Verdict Card */}
       <div className={`card-3d glass-panel p-6 rounded-2xl border specular-border relative overflow-hidden ${

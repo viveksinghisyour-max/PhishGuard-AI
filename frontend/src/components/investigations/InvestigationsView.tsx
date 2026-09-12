@@ -18,7 +18,8 @@ import {
   MessageSquare,
   Lock,
   ExternalLink,
-  Zap
+  Zap,
+  FileText
 } from 'lucide-react';
 import { InvestigationCase, ActiveTab, CaseNote, ContainmentAction } from '../../types';
 import { api } from '../../services/api';
@@ -27,9 +28,10 @@ import { ThreatCorrelationGraphView } from './ThreatCorrelationGraph';
 interface InvestigationsViewProps {
   initialCase?: InvestigationCase | null;
   setActiveTab: (tab: ActiveTab) => void;
+  onSelectCase?: (caseItem: InvestigationCase) => void;
 }
 
-export const InvestigationsView: React.FC<InvestigationsViewProps> = ({ initialCase, setActiveTab }) => {
+export const InvestigationsView: React.FC<InvestigationsViewProps> = ({ initialCase, setActiveTab, onSelectCase }) => {
   const [viewMode, setViewMode] = useState<'cases' | 'graph'>('cases');
   const [cases, setCases] = useState<InvestigationCase[]>([]);
   const [loading, setLoading] = useState(true);
@@ -473,6 +475,17 @@ export const InvestigationsView: React.FC<InvestigationsViewProps> = ({ initialC
                       <span className="text-cyber-muted block text-[10px]">SHA-256 FORENSIC EVIDENCE HASH:</span>
                       <span className="text-slate-400 text-[10px] break-all">{selectedCase.sha256_hash}</span>
                     </div>
+
+                    <button
+                      onClick={() => {
+                        onSelectCase?.(selectedCase);
+                        setActiveTab('reports');
+                      }}
+                      className="w-full py-2 px-3 rounded-lg bg-cyber-cyan/15 hover:bg-cyber-cyan/25 border border-cyber-cyan/40 text-cyber-cyan text-xs font-mono font-semibold flex items-center justify-center gap-2 transition-all shadow-glow-cyan/20"
+                    >
+                      <FileText className="w-4 h-4" />
+                      <span>Generate Full Forensic Dossier & Custody Chain</span>
+                    </button>
                   </div>
 
                   {/* Summary Description */}

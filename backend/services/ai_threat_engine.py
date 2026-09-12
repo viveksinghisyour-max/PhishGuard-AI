@@ -9,6 +9,7 @@ from backend.models.schemas import (
     ThreatScoreBreakdown,
     ThreatIndicator
 )
+from backend.services.threat_intel_service import threat_intel_service
 
 class AIThreatEngine:
     """Multi-factor threat detection and forensic scoring engine."""
@@ -300,6 +301,35 @@ class AIThreatEngine:
         breakdown.suspicious_ip = min(15, ip_score)
         breakdown.header_anomaly = min(10, len(headers.anomalies) * 5)
 
+        # Phase 6: Automated Threat Intelligence Feed Enrichment
+        extracted_ip_list = [h.ip for h in hops if h.ip]
+        extracted_domain_list = [u.domain for u in (urls or []) if u.domain]
+        if getattr(headers, 'from_domain', None):
+            extracted_domain_list.append(headers.from_domain)
+        extracted_url_list = [u.url for u in (urls or [])]
+        extracted_hash_list = [a.sha256 for a in (attachments or []) if a.sha256]
+
+
+        feed_matches = threat_intel_service.enrich_email_indicators(
+            urls=extracted_url_list,
+            domains=extracted_domain_list,
+            ips=extracted_ip_list,
+            hashes=extracted_hash_list
+        )
+
+        feed_penalty = 0
+        for match in feed_matches:
+            indicators.append(ThreatIndicator(
+                id=f"IND-FEED-{match['type'].upper()}",
+                category="domain" if match['type'] in ['domain', 'url'] else "network",
+                title=f"Active Threat Feed Hit: {match['provider']}",
+                severity=match['severity'],
+                description=f"Observable {match['type'].upper()} '{match['indicator']}' listed in {match['provider']} ({match['threat_type']}).",
+                mitre_technique=match['mitre_technique'],
+                evidence=f"{match['provider']}: {match['threat_type']}"
+            ))
+            feed_penalty += 25 if match['severity'] == 'critical' else 15
+
         # Total Composite Score (0-100)
         total_raw = (
             breakdown.ai_content_threat +
@@ -308,7 +338,8 @@ class AIThreatEngine:
             breakdown.domain_lookalike +
             breakdown.suspicious_ip +
             breakdown.header_anomaly +
-            att_score
+            att_score +
+            feed_penalty
         )
         final_score = max(5, min(100, total_raw))
 

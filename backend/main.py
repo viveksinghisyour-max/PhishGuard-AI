@@ -7,6 +7,9 @@ from backend.api.v1.routes_investigations import router as investigations_router
 from backend.api.v1.routes_analyze import router as analyze_router
 from backend.api.v1.routes_ml import router as ml_router
 from backend.api.v1.routes_geo import router as geo_router
+from backend.api.v1.routes_intel import router as intel_router
+from backend.api.v1.routes_mitre import router as mitre_router
+from backend.api.v1.routes_forensics import router as forensics_router
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
@@ -32,6 +35,10 @@ app.include_router(investigations_router, prefix=settings.API_V1_STR)
 app.include_router(analyze_router, prefix=settings.API_V1_STR)
 app.include_router(ml_router, prefix=settings.API_V1_STR)
 app.include_router(geo_router, prefix=settings.API_V1_STR)
+app.include_router(intel_router, prefix=settings.API_V1_STR)
+app.include_router(mitre_router, prefix=settings.API_V1_STR)
+app.include_router(forensics_router, prefix=settings.API_V1_STR)
+
 
 @app.get("/")
 def root():

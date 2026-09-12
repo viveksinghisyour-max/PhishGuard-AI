@@ -59,7 +59,13 @@ export const AnalyzeView: React.FC<AnalyzeViewProps> = ({ setActiveTab }) => {
       const result = await analyzeFn();
       setAnalysisResult(result);
     } catch (err: any) {
-      setErrorMsg(err.message || 'Analysis failed. Please check the email format and try again.');
+      console.error("Analysis execution failure:", err);
+      const isNetwork = err?.message === 'Failed to fetch' || err?.name === 'TypeError';
+      setErrorMsg(
+        isNetwork 
+          ? 'Network / Connection Error: Unable to reach PhishGuard AI analysis service. Please verify the backend is active.'
+          : (err.message || 'Analysis failed. Please verify the RFC 822 format and retry.')
+      );
     } finally {
       setIsAnalyzing(false);
     }

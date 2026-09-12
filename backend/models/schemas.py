@@ -238,12 +238,80 @@ class IOCLookupResponse(BaseModel):
     ioc_type: str
     reputation: str  # Malicious, Suspicious, Safe, Unknown
     threat_score: int
+    confidence_score: float = 0.95
     geolocation: Optional[GeoLocationInfo] = None
     associated_threats: list[str] = []
     mitre_techniques: list[str] = []
+    threat_actors: list[str] = []
+    associated_cases: list[str] = []
+    blacklists_hit: int = 0
+    blacklists_total: int = 68
     last_seen: str = ""
     reports_count: int = 0
     whois_info: Optional[dict[str, Any]] = None
+
+# ==================== THREAT FEEDS ====================
+class ThreatFeedItem(BaseModel):
+    id: str
+    provider: str  # OpenPhish, URLhaus, TorExit, AlienVaultOTX, CISAKEV
+    ioc_type: str  # ip, domain, url, hash
+    indicator: str
+    threat_type: str
+    severity: str
+    confidence: float
+    mitre_techniques: list[str] = []
+    first_seen: str
+    tags: list[str] = []
+
+class ThreatFeedProviderStatus(BaseModel):
+    name: str
+    category: str
+    count: int
+    status: str = "Active"
+    last_sync: str
+
+class ThreatFeedSyncStatus(BaseModel):
+    last_sync: str
+    total_indicators: int
+    providers: list[ThreatFeedProviderStatus]
+    is_syncing: bool = False
+
+# ==================== MITRE ATT&CK MATRIX ====================
+class MitreTechnique(BaseModel):
+    id: str  # e.g. T1566.002
+    name: str
+    tactic_id: str  # e.g. TA0001
+    tactic_name: str
+    description: str
+    subtechniques_count: int = 0
+    detection_rules: list[str] = []
+    mitigation_ids: list[str] = []
+
+class MitreTactic(BaseModel):
+    id: str  # e.g. TA0001
+    name: str
+    description: str
+    techniques: list[MitreTechnique] = []
+
+class MitreMatrixResponse(BaseModel):
+    tactics: list[MitreTactic]
+    total_tactics: int
+    total_techniques: int
+
+class MitreHeatmapHit(BaseModel):
+    technique_id: str
+    technique_name: str
+    tactic_id: str
+    detection_count: int
+    severity: str  # critical, high, medium, low
+    case_ids: list[str] = []
+    last_detected: str
+
+class MitreHeatmapResponse(BaseModel):
+    hits: dict[str, MitreHeatmapHit]
+    total_detections: int
+    top_techniques: list[str] = []
+
 
 # ==================== ML MODEL STATUS ====================
 class MLModelStatus(BaseModel):
@@ -257,3 +325,64 @@ class MLModelStatus(BaseModel):
     recall: float = 0.0
     f1_score: float = 0.0
     features_count: int = 0
+
+
+# ==================== PHASE 7: FORENSIC DOSSIER & CHAIN OF CUSTODY ====================
+class ChainOfCustodyBlock(BaseModel):
+    step_index: int
+    stage: str  # EVIDENCE_ACQUISITION, HEADER_CANONICALIZATION, IOC_EXTRACTION, THREAT_INTEL_CORRELATION, SOC_CONTAINMENT_PLAYBOOK, ANALYST_VERIFICATION
+    timestamp: str
+    actor: str
+    action_summary: str
+    artifact_hash: str
+    prev_block_hash: str
+    block_hash: str
+    verification_status: str = "VALID"
+
+class ChainOfCustodyVerification(BaseModel):
+    is_valid: bool
+    chain_length: int
+    verified_at: str
+    verified_by: str
+    genesis_hash: str
+    latest_block_hash: str
+    tamper_detected: bool = False
+    details: str = "Cryptographic integrity verified. Unbroken SHA-256 chain of custody."
+    block_details: list[dict[str, Any]] = []
+
+class ForensicDossier(BaseModel):
+    case_id: str
+    created_at: str
+    classification_banner: str = "NATIONAL CYBERSECURITY INCIDENT INVESTIGATION // TIER-3 CLASSIFIED"
+    case_status: str
+    assigned_analyst: str
+    subject: str
+    sender: str
+    recipient: str
+    earliest_ip: str
+    origin_country: str
+    threat_score: int
+    severity: str
+    verdict: str
+    summary: str
+    primary_sha256: str
+    md5_digest: str
+    sha1_digest: str
+    header_fingerprint: str
+    chain_of_custody: list[ChainOfCustodyBlock] = []
+    relay_hops: list[RelayHop] = []
+    indicators: list[ThreatIndicator] = []
+    mitre_techniques: list[dict[str, Any]] = []
+    extracted_urls: list[str] = []
+    containment_actions: list[ContainmentAction] = []
+    analyst_notes: list[CaseNote] = []
+    defense_recommendations: list[str] = []
+
+class DefensiveRulesResponse(BaseModel):
+    case_id: str
+    suricata_rules: str
+    snort_rules: str
+    yara_rule: str
+    ioc_count: int
+    generated_at: str
+

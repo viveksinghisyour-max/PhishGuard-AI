@@ -1,6 +1,16 @@
-import { DashboardStats, InvestigationCase, AnalysisResult, IOCLookupResponse } from '../types';
+import { 
+  DashboardStats, 
+  InvestigationCase, 
+  AnalysisResult, 
+  IOCLookupResponse,
+  ForensicDossier,
+  ChainOfCustodyVerification,
+  DefensiveRulesResponse
+} from '../types';
 
-const API_BASE = 'http://localhost:8000/api/v1';
+const API_BASE = (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'))
+  ? '/api/v1'
+  : (import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000/api/v1');
 
 // Offline fallback data if backend is starting or offline
 const FALLBACK_STATS: DashboardStats = {
@@ -321,10 +331,54 @@ export const api = {
       body: JSON.stringify({ query, type }),
     });
     if (!res.ok) {
-      throw new Error(`IOC lookup failed with status ${res.status}`);
+      const err = await res.json().catch(() => ({ detail: 'IOC lookup failed' }));
+      throw new Error(err.detail || `IOC lookup failed with status ${res.status}`);
     }
     return await res.json();
   },
+
+  async getThreatFeedStatus(): Promise<import('../types').ThreatFeedSyncStatus> {
+    const res = await fetch(`${API_BASE}/intel/feeds/status`);
+    if (!res.ok) {
+      throw new Error(`Failed to fetch threat feeds status: ${res.status}`);
+    }
+    return await res.json();
+  },
+
+  async syncThreatFeeds(): Promise<import('../types').ThreatFeedSyncStatus> {
+    const res = await fetch(`${API_BASE}/intel/feeds/sync`, {
+      method: 'POST',
+    });
+    if (!res.ok) {
+      throw new Error(`Threat feed sync failed: ${res.status}`);
+    }
+    return await res.json();
+  },
+
+  async getMitreMatrix(): Promise<import('../types').MitreMatrixResponse> {
+    const res = await fetch(`${API_BASE}/mitre/matrix`);
+    if (!res.ok) {
+      throw new Error(`Failed to fetch MITRE matrix: ${res.status}`);
+    }
+    return await res.json();
+  },
+
+  async getMitreHeatmap(): Promise<import('../types').MitreHeatmapResponse> {
+    const res = await fetch(`${API_BASE}/mitre/heatmap`);
+    if (!res.ok) {
+      throw new Error(`Failed to fetch MITRE heatmap: ${res.status}`);
+    }
+    return await res.json();
+  },
+
+  async exportMitreNavigatorLayer(): Promise<any> {
+    const res = await fetch(`${API_BASE}/mitre/export-layer`);
+    if (!res.ok) {
+      throw new Error(`Failed to export MITRE Navigator layer: ${res.status}`);
+    }
+    return await res.json();
+  },
+
 
   // ==================== ML & AI ENGINE ====================
   async getMLStatus(): Promise<import('../types').MLModelStatus> {
@@ -402,5 +456,84 @@ export const api = {
       throw new Error(err.detail || `Trajectory calculation failed: ${res.status}`);
     }
     return await res.json();
+  },
+
+  // ==================== PHASE 7: FORENSIC DOSSIER & CTI EXPORTS ====================
+  async getForensicDossier(caseId: string): Promise<ForensicDossier> {
+    const res = await fetch(`${API_BASE}/forensics/dossier/${encodeURIComponent(caseId)}`);
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ detail: 'Failed to fetch forensic dossier' }));
+      throw new Error(err.detail || `Forensic dossier fetch failed: ${res.status}`);
+    }
+    return await res.json();
+  },
+
+  async verifyCustodyChain(caseId: string): Promise<ChainOfCustodyVerification> {
+    const res = await fetch(`${API_BASE}/forensics/verify-chain/${encodeURIComponent(caseId)}`, {
+      method: 'POST',
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ detail: 'Chain of custody verification failed' }));
+      throw new Error(err.detail || `Verification failed: ${res.status}`);
+    }
+    return await res.json();
+  },
+
+  async downloadStixBundle(caseId: string): Promise<void> {
+    const res = await fetch(`${API_BASE}/forensics/export/stix/${encodeURIComponent(caseId)}`);
+    if (!res.ok) throw new Error(`STIX export failed: ${res.status}`);
+    const blob = await res.blob();
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `stix21-bundle-${caseId}.json`;
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+  },
+
+  async downloadIocCsv(caseId: string): Promise<void> {
+    const res = await fetch(`${API_BASE}/forensics/export/csv/${encodeURIComponent(caseId)}`);
+    if (!res.ok) throw new Error(`CSV export failed: ${res.status}`);
+    const blob = await res.blob();
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `iocs-${caseId}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+  },
+
+  async getDefensiveRules(caseId: string): Promise<DefensiveRulesResponse> {
+    const res = await fetch(`${API_BASE}/forensics/export/rules/${encodeURIComponent(caseId)}`);
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({ detail: 'Failed to generate defensive rules' }));
+      throw new Error(err.detail || `Rule generation failed: ${res.status}`);
+    }
+    return await res.json();
+  },
+
+  getHtmlDossierUrl(caseId: string): string {
+    return `${API_BASE}/forensics/export/html/${encodeURIComponent(caseId)}`;
+  },
+
+  async downloadHtmlDossier(caseId: string): Promise<void> {
+    const res = await fetch(`${API_BASE}/forensics/export/html/${encodeURIComponent(caseId)}`);
+    if (!res.ok) throw new Error(`HTML export failed: ${res.status}`);
+    const text = await res.text();
+    const blob = new Blob([text], { type: 'text/html;charset=utf-8' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `forensic-dossier-${caseId}.html`;
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
   }
 };
+
+

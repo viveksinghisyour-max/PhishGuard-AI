@@ -75,16 +75,24 @@ export function App() {
               <InvestigationsView 
                 initialCase={selectedCase} 
                 setActiveTab={setActiveTab} 
+                onSelectCase={handleSelectCase}
               />
             )}
 
             {activeTab === 'intel' && (
-              <IntelView />
+              <IntelView 
+                setActiveTab={setActiveTab}
+                onSelectCase={handleSelectCase}
+              />
             )}
 
             {activeTab === 'reports' && (
-              <ReportsView />
+              <ReportsView 
+                initialCaseId={selectedCase?.case_id}
+                onSelectCase={handleSelectCase}
+              />
             )}
+
 
             {activeTab === 'models' && (
               <ModelManagementView />
