@@ -27,7 +27,8 @@ class LLMReasoningService:
         return OpenAI(
             base_url=self.base_url,
             api_key=self.api_key,
-            timeout=30.0
+            timeout=10.0,
+            max_retries=0
         )
 
     def analyze_threat(self, email_data: Dict[str, Any]) -> Dict[str, Any]:
@@ -44,7 +45,7 @@ class LLMReasoningService:
         body_text = email_data.get("body_text", "")
 
         origin_ip = email_data.get("earliest_origin_ip", "Unknown")
-        origin_geo = email_data.get("origin_geo", {})
+        origin_geo = email_data.get("origin_geo") or {}
 
         system_prompt = (
             "You are PhishGuard AI's Principal Cyber Threat Intelligence Specialist and Lead SOC Analyst. "

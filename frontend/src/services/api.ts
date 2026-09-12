@@ -533,6 +533,12 @@ export const api = {
     a.click();
     window.URL.revokeObjectURL(url);
     document.body.removeChild(a);
+  },
+
+  async getSystemDiagnostics(): Promise<any> {
+    const res = await fetch(`${API_BASE}/system/diagnostics`);
+    if (!res.ok) throw new Error(`Diagnostics failed: ${res.status}`);
+    return await res.json();
   }
 };
 

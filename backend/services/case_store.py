@@ -241,6 +241,11 @@ class CaseStore:
         self._cases = [InvestigationCase(**item) for item in DEFAULT_CASES]
         self._save_cases()
 
+    def reset_to_defaults(self):
+        """Resets all cases back to the clean 6 default baseline SOC cases."""
+        self._cases = [InvestigationCase(**item) for item in DEFAULT_CASES]
+        self._save_cases()
+
     def _save_cases(self):
         try:
             with open(settings.CASES_FILE, "w", encoding="utf-8") as f:
@@ -414,5 +419,15 @@ class CaseStore:
             daily_trend=daily_trend,
             recent_activity=self.list_cases()[:6]
         )
+
+    def get_stats(self) -> dict:
+        cases = self.list_cases()
+        critical = sum(1 for c in cases if c.severity.lower() == "critical")
+        high = sum(1 for c in cases if c.severity.lower() == "high")
+        return {
+            "total_cases": len(cases),
+            "critical_cases": critical,
+            "high_cases": high
+        }
 
 case_store = CaseStore()

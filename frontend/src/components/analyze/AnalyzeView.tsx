@@ -186,41 +186,77 @@ export const AnalyzeView: React.FC<AnalyzeViewProps> = ({ setActiveTab }) => {
       {/* Tab 1: Preset Attack Scenarios (1-Click Test) */}
       {!isAnalyzing && activeInputTab === 'samples' && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {samples.map((sample) => (
-            <div
-              key={sample.id}
-              className="card-3d glass-panel p-5 rounded-2xl border border-cyber-border hover:border-cyan-500/40 specular-border transition-all group flex flex-col justify-between"
-            >
-              <div>
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-cyber-bg text-cyan-300 border border-cyber-border font-bold">
-                    {sample.type}
-                  </span>
-                  <span className={`text-[11px] font-mono font-black ${
-                    sample.severity.toLowerCase().includes('critical') ? 'text-rose-400' : 'text-emerald-400'
-                  }`}>
-                    {sample.severity}
-                  </span>
+          {samples.map((sample, idx) => {
+            const isBenign = sample.id.includes('benign');
+            const tags = sample.id === 'sample-bec' 
+              ? ['Tor Relay (185.220.101.44)', 'Reply-To Mismatch', 'Wire Fraud Lure']
+              : sample.id === 'sample-m365'
+              ? ['Homoglyph (rnicrosoft)', 'Fake SSO Portal', 'Auth Failures']
+              : sample.id === 'sample-dhl'
+              ? ['Direct IP URL Target', 'Foreign Relay Hop', 'Malware Delivery']
+              : ['SPF: PASS', 'DKIM: PASS', 'DMARC: PASS', 'Zero Threat Baseline'];
+
+            return (
+              <div
+                key={sample.id}
+                className="card-3d glass-panel p-5 rounded-2xl border border-cyber-border hover:border-cyan-500/40 specular-border transition-all group flex flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-300 border border-cyan-500/30 font-bold">
+                        Scenario #{idx + 1}
+                      </span>
+                      <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-cyber-bg text-slate-300 border border-cyber-border font-medium">
+                        {sample.type}
+                      </span>
+                    </div>
+                    <span className={`text-[11px] font-mono font-black ${
+                      isBenign ? 'text-emerald-400' : 'text-rose-400'
+                    }`}>
+                      {sample.severity}
+                    </span>
+                  </div>
+
+                  <h4 className="text-base font-bold text-white mt-2.5 group-hover:text-cyan-300 transition-colors">
+                    {sample.title}
+                  </h4>
+
+                  <p className="text-xs text-slate-400 mt-2 font-sans leading-relaxed">
+                    {sample.description}
+                  </p>
+
+                  {/* Telemetry Tags */}
+                  <div className="flex flex-wrap gap-1.5 mt-3">
+                    {tags.map((tag, tIdx) => (
+                      <span 
+                        key={tIdx} 
+                        className={`text-[10px] font-mono px-2 py-0.5 rounded border ${
+                          isBenign 
+                            ? 'bg-emerald-500/5 text-emerald-300 border-emerald-500/20' 
+                            : 'bg-rose-500/5 text-rose-300 border-rose-500/20'
+                        }`}
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
 
-                <h4 className="text-base font-bold text-white mt-2 group-hover:text-cyan-300 transition-colors">
-                  {sample.title}
-                </h4>
-
-                <p className="text-xs text-slate-400 mt-2 font-sans leading-relaxed">
-                  {sample.description}
-                </p>
+                <button
+                  onClick={() => handleRunSample(sample)}
+                  className={`mt-4 w-full py-2.5 rounded-xl border text-xs font-mono font-bold flex items-center justify-center gap-2 transition-all shadow-glow-cyan ${
+                    isBenign
+                      ? 'bg-emerald-500/15 hover:bg-emerald-500/25 border-emerald-500/30 hover:border-emerald-500/50 text-emerald-300'
+                      : 'bg-cyan-500/15 hover:bg-cyan-500/25 border-cyan-500/30 hover:border-cyan-500/50 text-cyan-300'
+                  }`}
+                >
+                  <span>1-Click Benchmark Triage</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
               </div>
-
-              <button
-                onClick={() => handleRunSample(sample)}
-                className="mt-4 w-full py-2.5 rounded-xl bg-cyan-500/15 hover:bg-cyan-500/25 border border-cyan-500/30 hover:border-cyan-500/50 text-cyan-300 text-xs font-mono font-bold flex items-center justify-center gap-2 shadow-glow-cyan transition-all"
-              >
-                <span>Run Full Forensic Analysis</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </button>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
 
