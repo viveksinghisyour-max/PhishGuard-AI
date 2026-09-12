@@ -24,8 +24,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => 
     { id: 'dashboard', label: 'Dashboard', icon: <LayoutDashboard className="w-5 h-5" /> },
     { id: 'analyze', label: 'Analyze Email', icon: <MailSearch className="w-5 h-5" />, badge: 'LIVE', badgeColor: 'badge-critical' },
     { id: 'investigations', label: 'Investigations', icon: <ShieldAlert className="w-5 h-5" />, badge: '6', badgeColor: 'badge-cyan' },
-    { id: 'models', label: 'AI & ML Engine', icon: <Cpu className="w-5 h-5" />, badge: '97.9%', badgeColor: 'bg-purple-500/20 text-purple-300 border border-purple-500/40' },
-    { id: 'intel', label: 'Threat Intelligence', icon: <Globe className="w-5 h-5" /> },
+    
     { id: 'reports', label: 'Forensic Reports', icon: <FileText className="w-5 h-5" /> },
     { id: 'settings', label: 'Settings', icon: <Settings className="w-5 h-5" /> },
   ];
