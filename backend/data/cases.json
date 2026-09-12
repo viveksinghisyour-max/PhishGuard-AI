@@ -1,5 +1,25 @@
 [
   {
+    "case_id": "CASE-2026-BC94",
+    "created_at": "2026-09-12T17:06:54.185021+00:00",
+    "subject": "1 new post in your community this week",
+    "sender": "contact@knowledgegate.ai",
+    "recipient": "viveksinghisyour@gmail.com",
+    "earliest_ip": "08.16.13.04",
+    "origin_country": "International Public IPv4",
+    "threat_score": 8,
+    "severity": "low",
+    "status": "Open",
+    "assigned_analyst": "SOC Analyst 1",
+    "sha256_hash": "350d504c5d3efd923865d3b152f4fdde54c7fc77744cccac320e168aae19a2b0",
+    "summary": "Clean email payload (Threat Score: 8/100). Envelope passed primary authentication checks (SPF: PASS, DMARC: NONE). No malicious indicators discovered.",
+    "sender_domain": "",
+    "threat_indicators": [],
+    "extracted_urls": [],
+    "notes": [],
+    "containment_actions": []
+  },
+  {
     "case_id": "CASE-2026-F8DF",
     "created_at": "2026-09-12T14:56:29.218731+00:00",
     "subject": "URGENT: Your Account Has Been Temporarily Restricted",
